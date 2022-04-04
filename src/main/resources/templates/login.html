@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Eynsuree Application</title>
+
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700|Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
+
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet"/>
+    <!-- Custom Stylesheet -->
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="top">
+        <h1 id="title" class="hidden"><span id="logo">EYNSURE <span>ONE STOP INSURANCE</span></span></h1>
+    </div>
+
+
+    <form th:action="@{/login}" method="post">
+
+
+
+        <!-- error message -->
+        <div th:if="${param.error}">
+            <div class="alert alert-danger">Invalid username or
+                password.</div>
+        </div>
+
+        <!-- logout message -->
+        <div th:if="${param.logout}">
+            <div class="alert alert-info">
+                You have been logged out.</div>
+        </div>
+
+    <div class="login-box animated fadeInUp">
+        <div class="box-header">
+            <h2>Log In</h2>
+
+        </div>
+
+
+        <label for="username">Username</label>
+        <br/>
+        <input type="email" id="username"  name="username"
+               class="form-control" placeholder="Enter Email ID"
+               autofocus="autofocus" required>
+        <br/>
+
+        <label for="password">Password</label>
+        <br/>
+        <input type="password" id="password" name="password"
+               class="form-control" placeholder="Enter Password"
+               autofocus="autofocus" required>
+        <br/>
+        <button type="submit">Sign In</button>
+        <br/>
+        <a href="#"><p class="small">Forgot your password?</p></a>
+    </div>
+
+    </form>
+</div>
+
+</body>
+
+<script th:inline="javascript">
+	$(document).ready(function () {
+    	$('#logo').addClass('animated fadeInDown');
+    	$("input:text:visible:first").focus();
+	});
+	$('#username').focus(function() {
+		$('label[for="username"]').addClass('selected');
+	});
+	$('#username').blur(function() {
+		$('label[for="username"]').removeClass('selected');
+	});
+	$('#password').focus(function() {
+		$('label[for="password"]').addClass('selected');
+	});
+	$('#password').blur(function() {
+		$('label[for="password"]').removeClass('selected');
+	});
+</script>
+
+</html>
