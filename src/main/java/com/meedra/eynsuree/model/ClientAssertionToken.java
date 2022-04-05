@@ -18,7 +18,7 @@ public class ClientAssertionToken extends AbstractAuditingEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name="assertion_token", length = 150)
+    @Column(name="assertion_token", length = 3000)
     private String assertionToken;
 
 }

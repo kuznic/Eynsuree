@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 @Service
@@ -38,6 +39,14 @@ public class InsuredItemService {
                 .orElseThrow(t);
     }
 
+    public InsuredItem fetchInsuredItem(UUID insuredItemUid) throws NoSuchFieldException {
+
+        Supplier<NoSuchFieldException> s = () -> new NoSuchFieldException("No Insured itemfound");
+
+        return insuredItemRepository
+                .findByUid(insuredItemUid)
+                .orElseThrow(s);
+    }
 
     @Transactional
     public void updateInsuredItem(Long insuredItemId, HashMap<String,String> insuredItemMap) throws NoSuchFieldException {

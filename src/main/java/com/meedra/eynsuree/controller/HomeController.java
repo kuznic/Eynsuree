@@ -74,12 +74,4 @@ public class HomeController {
 
 
 
-
-//    @GetMapping("/products")
-//    public String fetchProducts(Model model){
-//            model.addAttribute("products", productsService.getProducts(1L));
-//            return "products";
-//
-//    }
-
 }

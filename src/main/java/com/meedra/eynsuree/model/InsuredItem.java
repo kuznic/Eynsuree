@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.UUID;
 
 
 @Builder
@@ -35,6 +36,9 @@ public class InsuredItem extends AbstractAuditingEntity {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @Column(name = "item_uid", updatable = false, nullable = false, length = 32, columnDefinition = "uuid")
+    private final UUID uid = UUID.randomUUID();
 
 
     @Column(name = "insured_item_detail")

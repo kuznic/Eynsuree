@@ -26,7 +26,6 @@ public class StitchClientService {
 
 
     @Transactional
-    //@Scheduled(fixedRate = )
     public void saveClientDetails(){
 
         if(stitchCredentialRepository.findAll().size() == 0){
