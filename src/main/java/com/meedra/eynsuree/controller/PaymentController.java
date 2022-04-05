@@ -20,8 +20,10 @@ import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static com.meedra.eynsuree.stitch.utility.RandomStringsGenerator.generateRandomStrings;
 
 
 @Slf4j
@@ -79,10 +81,10 @@ public class PaymentController {
                 .builder()
                 .amount(amount)
                 .beneficiaryAccountNumber(form.getBeneficiaryAccount())
-                .beneficiaryBankId(BankId.fbn)
+                .beneficiaryBankId(BankId.fnb)
                 .beneficiaryName(form.getOrganizationName())
-                .beneficiaryReference(UUID.randomUUID().toString())
-                .externalReference(UUID.randomUUID().toString())
+                .beneficiaryReference(generateRandomStrings() + LocalDateTime.now().getSecond())
+                .externalReference(generateRandomStrings() + LocalDateTime.now().getSecond())
                 .payerReference(form.getPayerReference())
                 .build();
 

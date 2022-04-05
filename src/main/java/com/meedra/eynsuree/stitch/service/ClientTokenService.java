@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.meedra.eynsuree.config.StitchParameters;
 import com.meedra.eynsuree.dto.StitchPaymentRequestDto;
 import com.meedra.eynsuree.implementation.StitchClientService;
+import com.meedra.eynsuree.stitch.utility.Mutations;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -77,7 +79,7 @@ public class ClientTokenService {
         ClientResponse response = resource.
                 accept(MediaType.APPLICATION_JSON)
                 .header("Content-Type", "application/json")
-                .header("Authorization", userToken)
+                .header("Authorization", "Bearer "+ userToken)
                 .post(ClientResponse.class, query);
 
         jsonResponse = response.getEntity(String.class);
@@ -88,9 +90,27 @@ public class ClientTokenService {
     }
 
 
+
+//    private Map<String, Object> executeGraphqlQuery(String operationName,
+//                                                    String query, Map<String, Object> variables) {
+//        ExecutionInput executionInput = ExecutionInput.newExecutionInput()
+//                .query(query)
+//                .variables(variables)
+//                .operationName(operationName)
+//                .build();
+//
+//        return graphql.execute(executionInput).toSpecification();
+//    }
+
     private String buildPaymentQuery(StitchPaymentRequestDto paymentRequest) {
 
-        return gson.toJson(paymentRequest);
+        HashMap<String, String> payloadMap = new HashMap<>();
+        var mutations = new Mutations();
+
+        payloadMap.put("query",mutations.getCreatePaymentRequestMutation());
+        payloadMap.put("variables", gson.toJson(paymentRequest));
+
+        return gson.toJson(payloadMap);
 
     }
 
@@ -110,7 +130,7 @@ public class ClientTokenService {
 //                .stream()
 //                .filter(element -> !element.equals("openid"))
 //                .collect(Collectors.toList());
-        List<String> scopes = List.of("client_paymentauthorizationrequest");
+        List<String> scopes = List.of("client_paymentrequest");
 
 
         payloadMap.put("grant_type", stitchParameters.getGrantType());
@@ -134,7 +154,7 @@ public class ClientTokenService {
 
 
 
-        try{
+
             ClientResponse response = resource.
                     accept(MediaType.APPLICATION_JSON)
                     .header("Content-Type", "application/x-www-form-urlencoded")
@@ -147,9 +167,12 @@ public class ClientTokenService {
             log.info(jsonResponse);
             log.info(Arrays.toString(scopes.toArray()));
 
-            return gson.fromJson(jsonResponse, HashMap.class);
 
-        }catch (IllegalStateException| IllegalThreadStateException e){
+            try{
+
+                return gson.fromJson(jsonResponse, HashMap.class);
+
+        }catch (IllegalStateException | IllegalThreadStateException e){
             return new HashMap();
         }
 
