@@ -51,48 +51,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 
 
 
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/registration**")
-//                .access("hasRole('ROLE_USER')")
-//                .antMatchers("/", "/**").access("permitAll")
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .invalidateHttpSession(true).clearAuthentication(true)
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).
-//                logoutSuccessUrl("/")
-//                .permitAll();
-//
-//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .antMatcher("/login*")
-//                .authorizeRequests()
-//                .antMatchers("/registration**", "/js/**", "/css/**", "/images/**")
-//                .permitAll()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .invalidateHttpSession(true).clearAuthentication(true)
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).
-//                logoutSuccessUrl("/login?logout")
-//                .permitAll();
 
         http
                 .authorizeRequests()

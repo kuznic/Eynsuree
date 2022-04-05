@@ -47,5 +47,5 @@ INSERT INTO org_customer(id, customer_uid, organization_id, first_name, last_nam
 
 
 --Script to create an insured item
-INSERT INTO insured_item(id,insurance_premium,organization_id,customer_id,insurance_status,payment_date,next_payment_date,created_at)VALUES(1,10000,10,1,'INSURED',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
-INSERT INTO insured_item(id,insurance_premium,organization_id,customer_id,insurance_status,payment_date,next_payment_date,created_at)VALUES(2,1000,10,1,'INSURED',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)
+INSERT INTO insured_item(id,item_uid,insurance_premium,organization_id,customer_id,insurance_status,payment_date,next_payment_date,created_at)VALUES(1,'02324cbc-9462-5bfe-a917-1ab610bd42f1',10000,10,1,'INSURED',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
+INSERT INTO insured_item(id,item_uid,insurance_premium,organization_id,customer_id,insurance_status,payment_date,next_payment_date,created_at)VALUES(2,'03324cbc-9162-5bfe-a917-1ab610bd42f1',1000,10,1,'INSURED',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)

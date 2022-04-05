@@ -13,6 +13,7 @@
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <script src="https://kit.fontawesome.com/237e4ad64d.js" crossorigin="anonymous"></script>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -45,7 +46,7 @@
 
       <h1 class="logo"><a href="main.html">Eynsure</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      <!-- <a href="main.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar">
         <ul>
@@ -83,7 +84,7 @@
               <li  class="list-group-item list-group-item-action" th:text="'Model:' + ${item.model}"> </li>
               <li class="list-group-item list-group-item-action" th:text="'Year Of Manufacture:' +${item.year}"></li>
               <li class="list-group-item list-group-item-action" th:text="'Insured Cost:NGN' +${item.cost}+'.00'"></li>
-              <br>
+              <br><br><br><br>
             </ol>
 
           </div>
@@ -91,21 +92,27 @@
 
         <div class="col-md-7 col-lg-4 d-flex align-items-stretch mb-6 mb-lg-2" data-aos="zoom-in" data-aos-delay="300">
           <div class="icon-box">
-            <div class="icon"><i class="ri-palette-line"></i></div>
+            <div class="icon"><i class="fa-solid fa-building"></i></div>
             <h4 class="title"><a href="">Insuring Company</a></h4>
             <div class="row justify-content-center"></div>
             <ol class="list-group list-group-flush" th:each="item: ${dashboard}">
               <li class="list-group-item list-group-item-action" th:text="'Name:' + ${item.organization.name}"> </li>
               <li class="list-group-item list-group-item-action" style="color:green;" th:text="'Status:'+  ${item.insuranceStatus}"></li>
+              <li class="list-group-item list-group-item-action" th:text="'Premium:NGN' + ${item.insurancePremium} +'.00'"> </li>
               <li class="list-group-item list-group-item-action" th:text="'Payment Due Date:' + ${#temporals.format(item.nextPaymentDate, 'dd-MM-yyyy')}"> </li>
-              <br>
+
+
+              <a href="#" th:href="@{/payment/{id}(id=${item.uid})}">
+                <li class="list-group-item list-group-item-action active" aria-current="true">Make Payment</li>
+              </a>
+
+               <br>
             </ol>
 
-            <ol class="list-group list-group-flush">
-              <a href="#" th:href="@{/payment}" class="list-group-item list-group-item-action active" aria-current="true">
-                Make Payment
-              </a>
-            </ol>
+
+
+
+
 
           </div>
           </div>

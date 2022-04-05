@@ -26,7 +26,6 @@ public class StitchClientService {
 
 
     @Transactional
-    //@Scheduled(fixedRate = )//ask tunji how to schedule this to run once
     public void saveClientDetails(){
 
         if(stitchCredentialRepository.findAll().size() == 0){
