@@ -8,19 +8,10 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.Header;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -79,7 +70,7 @@ public class ClientTokenService {
         String url = stitchParameters.getGraphqlServer();
 
         Client client = Client.create();
-        String jsonResponse = "";
+        String jsonResponse;
 
         WebResource resource = client.resource(url);
 
@@ -110,7 +101,7 @@ public class ClientTokenService {
         StringBuilder result = new StringBuilder();
         Client client = Client.create();
         boolean first = true;
-        String jsonResponse = "";
+        String jsonResponse;
         String assertionToken = accessionTokenService.getAssertionToken();
         String clientId = credentials.getId();
 
@@ -142,24 +133,25 @@ public class ClientTokenService {
         }
 
 
-        ClientResponse response = resource.
-                accept(MediaType.APPLICATION_JSON)
-                .header("Content-Type", "application/x-www-form-urlencoded")
-                .post(ClientResponse.class, result.toString());
 
-        log.info("TOKEN{}", assertionToken);
+        try{
+            ClientResponse response = resource.
+                    accept(MediaType.APPLICATION_JSON)
+                    .header("Content-Type", "application/x-www-form-urlencoded")
+                    .post(ClientResponse.class, result.toString());
 
-        log.info("Response:{}", response);
+            log.info("TOKEN: {}", assertionToken);
 
-        if (response.getType().equals(MediaType.APPLICATION_JSON)) {
+            log.info("Response:{}", response);
             jsonResponse = response.getEntity(String.class);
-
+            log.info(jsonResponse);
             log.info(Arrays.toString(scopes.toArray()));
-            //log.info("JSONRESPONSE{}", jsonResponse);
 
             return gson.fromJson(jsonResponse, HashMap.class);
+
+        }catch (IllegalStateException| IllegalThreadStateException e){
+            return new HashMap();
         }
 
-        return new HashMap();
     }
 }
