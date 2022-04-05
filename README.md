@@ -2,7 +2,7 @@
 This is web application built as part of the interview process for a Stitch Engineer.
 
 
-This application was written using JAVA and the SpringBoot Framework with ThymeLeaf as the HTML template engine. The database in use is an in-memory database called H2. A new instance is created everytime the application is restarted.
+This application is written using JAVA and the SpringBoot Framework with ThymeLeaf as the HTML template engine. The database in use is an in-memory database called H2. A new instance is created everytime the application is restarted.
 
 
 It is a essentially a solution that aggregates offerings from different insurance companies and allows customers choose from competing offers and make payment using the Stitch API.
