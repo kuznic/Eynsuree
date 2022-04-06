@@ -2,6 +2,12 @@
 This is web application built as part of the interview process for a Stitch Engineer.
 
 
+The App has also been deployed to Heroku and can be accessed at
+
+
+https://eynsuree.herokuapp.com
+
+
 This application is written using JAVA and the SpringBoot Framework with ThymeLeaf as the HTML template engine. The database in use is an in-memory database called H2. A new instance is created everytime the application is restarted.
 
 
