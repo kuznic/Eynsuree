@@ -28,8 +28,9 @@ To start the application, run the main class in
 The application runs on port 8080. 
 
 
-The default url is localhost:8080 which resolves to a login page.
+The default url is localhost:8080 which resolves to a home page.
 
+# Login Details
 
 Login with the following user details:
 
@@ -38,8 +39,5 @@ email: john.bello@gmail.com
 
 
 password: 12345
-
-
-There is also a homepage at localhost:8080/home
 
 
