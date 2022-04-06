@@ -67,10 +67,19 @@ public class HomeController {
     }
 
 
+    @GetMapping("/error")
+    public String error(){
+        return "errorpage";
+    }
+
+
     @GetMapping("/home")
     public String home(){
         return "home";
     }
+
+
+
 
 
 
