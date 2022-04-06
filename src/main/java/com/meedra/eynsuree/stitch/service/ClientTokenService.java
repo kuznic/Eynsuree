@@ -61,13 +61,15 @@ public class ClientTokenService {
 //        return client.execute(request);
 //    }
 
-    public HashMap callGraphQLService(StitchPaymentRequestDto paymentRequest) {
+    public String callGraphQLService(StitchPaymentRequestDto paymentRequest) {
 
-        if(getClientToken().size() == 0){
-            return new HashMap();
+        var clientToken = getClientToken();
+
+        if(clientToken.size() == 0){
+            return "";
         }
 
-        String userToken = getClientToken().get("access_token").toString();
+        String userToken = clientToken.get("access_token").toString();
         String query = buildPaymentQuery(paymentRequest);
         String url = stitchParameters.getGraphqlServer();
 
@@ -82,9 +84,9 @@ public class ClientTokenService {
                 .header("Authorization", "Bearer "+ userToken)
                 .post(ClientResponse.class, query);
 
-        jsonResponse = response.getEntity(String.class);
+        return jsonResponse = response.getEntity(String.class);
 
-        return gson.fromJson(jsonResponse, HashMap.class);
+        //return gson.fromJson(jsonResponse, HashMap.class);
 
 
     }

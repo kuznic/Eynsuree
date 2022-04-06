@@ -9,21 +9,19 @@ import com.meedra.eynsuree.enums.Currency;
 import com.meedra.eynsuree.implementation.*;
 import com.meedra.eynsuree.stitch.service.ClientTokenService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpResponse;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
-import javax.ws.rs.core.Response;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static com.meedra.eynsuree.stitch.utility.RandomStringsGenerator.generateRandomStrings;
+import static com.meedra.eynsuree.stitch.utility.EynsureUtils.*;
 
 
 @Slf4j
@@ -39,6 +37,10 @@ public class PaymentController {
 
     @Autowired
     private ClientTokenService clientTokenService;
+
+
+    @Autowired
+    private StitchClientService stitchClientService;
 
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -64,7 +66,7 @@ public class PaymentController {
 
     @RequestMapping(value = "/submitpayment")
     @PostMapping
-    public String submitPayment(@ModelAttribute PaymentDto form, Model model) throws  IOException, URISyntaxException {
+    public String submitPayment(HttpServletRequest request, @ModelAttribute PaymentDto form, Model model) throws  IOException, URISyntaxException {
 
 
         model.getAttribute("clientToken");
@@ -91,17 +93,24 @@ public class PaymentController {
 
         var httpResponse = clientTokenService.callGraphQLService(stitchPaymentRequest);
 
-        if (httpResponse.size() == 0){
+        if (httpResponse.length() == 0){
 
             return "errorpage";
         }
+
+        var paymentResponseDto =  parsePaymentResponse(httpResponse);
+
+        var redirectUrl = getDebitUrl(paymentResponseDto.getUrl(), stitchClientService.getCredentials().getRedirectUrls().get(3));
 
         log.info("got here");
 
 
 
 
-        return "/";
+
+
+
+        return "redirect:" + redirectUrl;
     }
 
 
