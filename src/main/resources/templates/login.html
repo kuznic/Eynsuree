@@ -28,11 +28,7 @@
 
 
 
-        <!-- logout message -->
-        <div th:if="${param.logout}">
-            <div class="alert alert-info">
-                You have been logged out.</div>
-        </div>
+
 
 
 
@@ -41,17 +37,25 @@
         <div class="box-header">
             <h2>Log In</h2>
 
-            <!-- error message -->
 
 
+        </div>
+
+        <!-- logout message -->
+        <div th:if="${param.logout}">
+            <div class="alert alert-info">
+                You have been logged out.</div>
         </div>
 
 
         <label for="username">Username</label>
 
+        <!-- error message -->
         <div th:if="${param.error}">
-            <div class="alert alert-danger">Invalid username or
+            <div class="alert alert-danger"  color="red">Invalid username or
                 password.</div>
+
+
         </div>
         <br/>
         <input type="email" id="username"  name="username"

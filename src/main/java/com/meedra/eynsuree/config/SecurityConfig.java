@@ -67,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .loginPage("/login")
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/home")
                 .and()
                 .logout()
                 .invalidateHttpSession(true).clearAuthentication(true)
