@@ -1,9 +1,6 @@
 package com.meedra.eynsuree.controller;
 
-import com.meedra.eynsuree.implementation.InsuredItemService;
-import com.meedra.eynsuree.implementation.JpaUserDetailsService;
-import com.meedra.eynsuree.implementation.ProductsCategoryService;
-import com.meedra.eynsuree.implementation.ProductsService;
+import com.meedra.eynsuree.implementation.*;
 import com.meedra.eynsuree.model.InsuredItem;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +29,22 @@ public class HomeController {
     @Autowired
     private JpaUserDetailsService jpaUserDetailsService;
 
+    @Autowired
+    private CustomerService customerService;
+
 
     @GetMapping("/")
     public String home(Authentication a, Model model) throws NotFoundException, NoSuchFieldException {
 
         model.addAttribute("username", jpaUserDetailsService.fetchUser(a.getName()).getFirstName());
 
+        if (customerService.fetchCustomer(a.getName()).isEmpty()){
+            return "notinsuredyet";
+        }
+
         var insuredItems = insuredItemService.fetchInsuredItems(a.getName());
+
+
 
         model.addAttribute("insuredItemDetails", insuredItems
                 .stream()

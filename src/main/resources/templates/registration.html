@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Registration Form</title>
+
+    <link th:rel="stylesheet" th:href="@{/css/assets5/password-strength/password.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{webjars/font-awesome/5.11.2/css/all.css} "/>
+
+    <!-- Font Icon -->
+    <link th:href="@{/css/assets4/fonts/material-icon/css/material-design-iconic-font.min.css}" rel="stylesheet">
+
+    <!-- Main css -->
+    <link th:href="@{/css/assets4/css/style.css}" rel="stylesheet" >
+</head>
+<body>
+
+<div class="main">
+
+    <section class="signup">
+        <!-- <img src="images/signup-bg.jpg" alt=""> -->
+        <div class="container">
+            <div class="signup-content">
+                <form method="POST" th:action="@{/register}"  th:object="${userRegistrationDto}"
+                      id="signup-form" class="signup-form">
+                    <h2 class="form-title">Register</h2>
+
+
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="firstName" id="firstName"
+                               required placeholder="Your Firstname"/>
+                        <p th:each="error: ${#fields.errors('firstName')}"
+                           th:text="${error}">Validation error</p>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="lastname" id="lastname"
+                               th:field="*{lastName}" required placeholder="Your Lastname"/>
+                        <p th:each="error: ${#fields.errors('lastName')}"
+                           th:text="${error}">Validation error</p>
+                    </div>
+                    <div class="form-group">
+                        <p th:if="${emailError != null}" th:text="${emailError}" style="color:#FF0000";>Validation error</p>
+                        <input type="email" class="form-input" name="email" id="email"
+                               th:field="*{email}" required placeholder="Your Email"/>
+                    </div>
+
+                    <div class="form-group">
+                        <p th:if="${passwordError != null}" th:text="${passwordError}" style="color:#FF0000";>Validation error</p>
+                        <div class="input-group" id="show_hide_password">
+                            <input type="password" class="form-input" id="password" autocomplete="off" placeholder="Enter your Password"
+                                   required th:field="*{password}"/>
+                            <span class="input-group-text"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-input" name="re_password" id="re_password"
+                               required th:field="*{rePassword}"placeholder="Repeat your password"/>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                        <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="submit" id="submit" class="form-submit" value="Sign up"/>
+                    </div>
+                </form>
+                <p class="loginhere">
+                    Have already an account ? <a href="#" th:href="@{/login}" class="loginhere-link">Login here</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- JS -->
+
+<script th:src="@{webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/css/assets5/password-strength/password.min.js}"></script>
+
+
+<script th:inline="javascript">
+    $('#password').password({
+        closestSelector: '.form-group',
+        shortPass: 'The password is too short',
+        badPass: 'Weak; try combining letters & numbers',
+        goodPass: 'Medium; try using special characters',
+        strongPass: 'Strong password',
+        containsField: 'The password contains your username',
+        enterPass: 'Type your password',
+        showPercent: false,
+        showText: true, // shows the text tips
+        animate: true, // whether or not to animate the progress bar on input blur/focus
+        animateSpeed: 'fast', // the above animation speed
+        field: false, // select the match field (selector or jQuery instance) for better password checks
+        fieldPartialMatch: true, // whether to check for partials in field
+        minimumLength: 4 // minimum password length (below this threshold, the score is 0)
+    });
+</script>
+
+<script th:inline="javascript">
+    var input = $("#show_hide_password input");
+    var icon = $("#show_hide_password i");
+
+    icon.on('click', function (event) {
+        event.preventDefault();
+
+        if (input.attr("type") === "text") {
+            input.attr('type', 'password');
+            icon.addClass("fa-eye-slash");
+            icon.removeClass("fa-eye");
+
+        } else if (input.attr("type") === "password") {
+            input.attr('type', 'text');
+            icon.removeClass("fa-eye-slash");
+            icon.addClass("fa-eye");
+        }
+    });
+</script>
+</body>
+</html>
+
+
+<!--<div class="form-group">-->
+<!--    <label class="col-md-4 control-label">Department / Office</label>-->
+<!--    <div class="col-md-4 selectContainer">-->
+<!--        <div class="input-group">-->
+<!--            <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>-->
+<!--            <select name="department" class="form-control selectpicker">-->
+<!--                <option value="">Select your Department/Office</option>-->
+<!--                <option>Department of Engineering</option>-->
+<!--                <option>Department of Agriculture</option>-->
+<!--                <option >Accounting Office</option>-->
+<!--                <option >Tresurer's Office</option>-->
+<!--                <option >MPDC</option>-->
+<!--                <option >MCTC</option>-->
+<!--                <option >MCR</option>-->
+<!--                <option >Mayor's Office</option>-->
+<!--                <option >Tourism Office</option>-->
+<!--            </select>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->

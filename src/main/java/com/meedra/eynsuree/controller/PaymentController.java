@@ -15,8 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -42,11 +40,6 @@ public class PaymentController {
     private StitchClientService stitchClientService;
 
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-
-
-
-
 
     @RequestMapping(value = "/payment/{id}")
     public String getPaymentForm(@PathVariable("id") UUID id, Model model) throws NoSuchFieldException {
@@ -65,7 +58,7 @@ public class PaymentController {
 
     @RequestMapping(value = "/submitpayment")
     @PostMapping
-    public String submitPayment(HttpServletRequest request, @ModelAttribute PaymentDto form, Model model) throws  IOException, URISyntaxException {
+    public String submitPayment(HttpServletRequest request, @ModelAttribute PaymentDto form, Model model) {
 
 
         model.getAttribute("clientToken");
