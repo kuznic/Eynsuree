@@ -4,6 +4,7 @@ import com.meedra.eynsuree.model.Authority;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +38,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private String lastName;
 
 
-    @Column(name = "email",updatable = false, nullable = false, length = 32)
+    @Email
+    @Column(name = "email",updatable = false, nullable = false, length = 100)
     private String email;
 
 

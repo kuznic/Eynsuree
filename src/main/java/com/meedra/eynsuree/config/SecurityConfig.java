@@ -44,10 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     }
 
 
-    @Bean
-    public PasswordEncoder encoder() {
-        return new StandardPasswordEncoder("53cr3t");
-    }
+//    @Bean
+//    public PasswordEncoder encoder() {
+//        return new StandardPasswordEncoder("53cr3t");
+//    }
 
 
 
@@ -58,7 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
         http
                 .authorizeRequests()
                 .antMatchers("/registration**", "/js/**", "/css/**", "/images/**"
-                        ,"/home", "/login", "/css/vendor/**")
+                        ,"/home", "/login", "/css/vendor/**", "/register/**",
+                        "webjars/**", "/webjars/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

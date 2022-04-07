@@ -31,8 +31,9 @@
 
 
             <div class="form-icon">
-                <span><i class="fa-solid fa-credit-card-blank"></i></span>
+                <div class="icon"><i th:href="@{/images/credit-card.svg}" rel="icon"></i></div>
             </div>
+
             <br><br>
 
             <h1> <small class="text-muted" color="blue"/>   Payment Form</h1>
@@ -52,13 +53,15 @@
 
             <div class="form-group">
                 <label for="payerReference" class="col-sm-5 col-form-label">Payer Reference</label>
-                <input type="text" class="form-control item" id="payerReference" name="payerReference" required placeholder="Payer Reference">
+                <input type="text" class="form-control item" id="payerReference" name="payerReference"
+                       required placeholder="Payer Reference">
             </div>
 
 
             <div class="form-group">
                 <label for="organizationName" class="col-sm-5 col-form-label">Beneficiary</label>
-                <input type="text" id="organizationName" name="organizationName" class="form-control item" th:value="${organizationName}" placeholder="Organization Name">
+                <input type="text" id="organizationName" name="organizationName" class="form-control item"
+                       th:value="${organizationName}" placeholder="Organization Name">
             </div>
 
             <div class="form-group">
