@@ -1,5 +1,5 @@
 # Eynsuree
-This is web application built as part of the interview process for a Stitch Engineer.
+This is a concept web application that integrates to Stitch
 
 
 The App has also been deployed to Heroku and can be accessed at
@@ -35,7 +35,7 @@ The default url is localhost:8080 which resolves to a home page.
 Login with the following user details:
 
 
-email: john.bello@gmail.com
+email: emeka.vin@meedra.com
 
 
 password: 12345
