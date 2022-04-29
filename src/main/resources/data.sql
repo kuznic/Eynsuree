@@ -18,7 +18,7 @@ INSERT INTO product (id,product_uid,product_type,product_cat_id,created_at) VALU
 
 
 --Script to preload with a user
-INSERT INTO users (id, user_uid,first_name, last_name, email, password, created_at) VALUES(10, '03324cbc-9462-5bfe-a917-1ab610bd49f1','John','Bello', 'john.bello@gmail.com', '$2a$10$xn3LI/AjqicFYZFruSwve.681477XaVNaUQbr1gioaWPn4t1KsnmG', CURRENT_TIMESTAMP);
+INSERT INTO users (id, user_uid,first_name, last_name, email, password, created_at) VALUES(10, '03324cbc-9462-5bfe-a917-1ab610bd49f1','Emeka','Vin', 'emeka.vin@meedra.com', '$2a$10$xn3LI/AjqicFYZFruSwve.681477XaVNaUQbr1gioaWPn4t1KsnmG', CURRENT_TIMESTAMP);
 
 
 --Script to preload authority

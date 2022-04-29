@@ -3,6 +3,11 @@ package com.meedra.eynsuree.config;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+
+/**
+ * Spring Security by default prevents access to the GUI console of the in-memory H2 database
+ * This class allows you access the console on port 8090
+ */
 @Component
 //@Profile("test") // <-- up to you
 public class H2 {

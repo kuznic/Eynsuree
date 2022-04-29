@@ -21,20 +21,7 @@
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>central</id>
-            <name>Central Repository</name>
-            <url>https://repo.maven.apache.org/maven2</url>
-        </repository>
-    </repositories>
+
 
     <groupId>com.meedra</groupId>
     <artifactId>Eynsuree</artifactId>
@@ -87,14 +74,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.12.0</version>
-        </dependency>
-
-
-
-        <dependency>
-            <groupId>com.github.americanexpress.nodes</groupId>
-            <artifactId>nodes</artifactId>
-            <version>0.5.0</version>
         </dependency>
 
 
@@ -198,12 +177,6 @@
         </dependency>
 
 
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.passay/passay &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.passay</groupId>-->
-<!--            <artifactId>passay</artifactId>-->
-<!--            <version>1.6.1</version>-->
-<!--        </dependency>-->
 
         <dependency>
             <groupId>nz.net.ultraq.thymeleaf</groupId>

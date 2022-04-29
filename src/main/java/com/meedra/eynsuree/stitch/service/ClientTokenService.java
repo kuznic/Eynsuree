@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -41,27 +40,7 @@ public class ClientTokenService {
     }
 
 
-//    public  HttpResponse callGraphQLService(StitchPaymentRequestDto paymentRequest )
-//            throws URISyntaxException, IOException {
-//
-//        String userToken = getClientToken().get("access_token").toString();
-//        String query = buildPaymentQuery(paymentRequest);
-//        String url = stitchParameters.getGraphqlServer();
-//
-//        HttpClient client = HttpClientBuilder.create().build();
-//        HttpGet request = new HttpGet(url);
-//
-//        URI uri = new URIBuilder(request.getURI())
-//                .addParameter("query", query)
-//                .build();
-//
-//        request.setURI(uri);
-//        request.setHeader("Authorization", userToken);
-//
-//        return client.execute(request);
-//    }
-
-    public String callGraphQLService(StitchPaymentRequestDto paymentRequest) {
+    public String callStitchGraphQLService(StitchPaymentRequestDto paymentRequest) {
 
         var clientToken = getClientToken();
 
@@ -69,12 +48,11 @@ public class ClientTokenService {
             return "";
         }
 
-        String userToken = clientToken.get("access_token").toString();
+        String userToken = clientToken.get("access_token");
         String query = buildPaymentQuery(paymentRequest);
         String url = stitchParameters.getGraphqlServer();
 
         Client client = Client.create();
-        String jsonResponse;
 
         WebResource resource = client.resource(url);
 
@@ -84,7 +62,7 @@ public class ClientTokenService {
                 .header("Authorization", "Bearer "+ userToken)
                 .post(ClientResponse.class, query);
 
-        return jsonResponse = response.getEntity(String.class);
+        return  response.getEntity(String.class);
 
         //return gson.fromJson(jsonResponse, HashMap.class);
 
@@ -92,17 +70,6 @@ public class ClientTokenService {
     }
 
 
-
-//    private Map<String, Object> executeGraphqlQuery(String operationName,
-//                                                    String query, Map<String, Object> variables) {
-//        ExecutionInput executionInput = ExecutionInput.newExecutionInput()
-//                .query(query)
-//                .variables(variables)
-//                .operationName(operationName)
-//                .build();
-//
-//        return graphql.execute(executionInput).toSpecification();
-//    }
 
     private String buildPaymentQuery(StitchPaymentRequestDto paymentRequest) {
 
@@ -116,7 +83,7 @@ public class ClientTokenService {
 
     }
 
-    private HashMap getClientToken() {
+    private HashMap<String,String> getClientToken() {
 
         var credentials = stitchClientService.getCredentials();
         HashMap<String, String> payloadMap = new HashMap<>();

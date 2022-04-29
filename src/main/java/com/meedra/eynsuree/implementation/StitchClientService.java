@@ -9,8 +9,6 @@ import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 import java.io.FileReader;
 import java.util.ArrayList;
 
@@ -20,12 +18,18 @@ import java.util.ArrayList;
 @Service
 public class StitchClientService {
 
+
+    private final StitchCredentialRepository stitchCredentialRepository;
+
     @Autowired
-    private StitchCredentialRepository stitchCredentialRepository;
+    public StitchClientService(StitchCredentialRepository stitchCredentialRepository) {
+        this.stitchCredentialRepository = stitchCredentialRepository;
+    }
 
 
+    // @Transactional
 
-    @Transactional
+    //Loads credential information into the h2 database
     public void saveClientDetails(){
 
         if(stitchCredentialRepository.findAll().size() == 0){
@@ -57,6 +61,7 @@ public class StitchClientService {
 
 
 
+    //retrieves credential information from the database and caches it
     @Cacheable(value = "credential")
     public StitchCredential getCredentials(){
 

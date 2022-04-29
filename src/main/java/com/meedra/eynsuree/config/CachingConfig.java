@@ -9,6 +9,11 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.Arrays;
 
+
+/**
+ * Enables caching to save database access time
+ * when required
+ */
 @Configuration
 @EnableCaching
 public class CachingConfig {

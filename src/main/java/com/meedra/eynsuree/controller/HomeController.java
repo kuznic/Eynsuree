@@ -33,15 +33,39 @@ public class HomeController {
     private CustomerService customerService;
 
 
+
+
+    //renders the login page or home page depending on user interaction
+    @GetMapping("/login")
+    public String login() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+            return "login";
+        }
+        return "redirect:/";
+    }
+
+
+
+
+    //Displays the main page after logging in successfully
     @GetMapping("/")
     public String home(Authentication a, Model model) throws NotFoundException, NoSuchFieldException {
 
-        model.addAttribute("username", jpaUserDetailsService.fetchUser(a.getName()).getFirstName());
+        var fullName = jpaUserDetailsService.fetchUser(a.getName()).getFirstName() + " " +
+                jpaUserDetailsService.fetchUser(a.getName()).getLastName();
 
+        model.addAttribute("username", fullName);
+
+
+        //This checks that user has just registered and presents a page with no insurance
         if (customerService.fetchCustomer(a.getName()).isEmpty()){
             return "notinsuredyet";
         }
 
+        //retrieves the insurance details of a user
         var insuredItems = insuredItemService.fetchInsuredItems(a.getName());
 
 
@@ -55,22 +79,11 @@ public class HomeController {
 
         model.addAttribute("dashboard", insuredItems);
 
-
-        //model.addAttribute("dashboard",insuredItemService.fetchInsuredItems(a.getName()));
         return "main";
     }
 
 
-    @GetMapping("/login")
-    public String login() {
 
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            return "login";
-        }
-        return "redirect:/";
-    }
 
 
     @GetMapping("/error")
@@ -79,6 +92,7 @@ public class HomeController {
     }
 
 
+    //renders the home page
     @GetMapping("/home")
     public String home(){
         return "home";
