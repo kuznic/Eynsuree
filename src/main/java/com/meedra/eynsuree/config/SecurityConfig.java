@@ -44,13 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     }
 
 
-//    @Bean
-//    public PasswordEncoder encoder() {
-//        return new StandardPasswordEncoder("53cr3t");
-//    }
-
-
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

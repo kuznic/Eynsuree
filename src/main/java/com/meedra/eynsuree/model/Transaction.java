@@ -1,5 +1,7 @@
 package com.meedra.eynsuree.model;
 
+import com.meedra.eynsuree.enums.GenderType;
+import com.meedra.eynsuree.enums.TransactionStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,15 +24,15 @@ public class Transaction extends AbstractAuditingEntity {
 
 
 
-    @Column(name = "transaction_uid", updatable = false, nullable = false, length = 32, columnDefinition = "uuid")
-    private final UUID uid = UUID.randomUUID();
+    @Column(name = "transaction_id", updatable = false,nullable = false,  length = 100)
+    private String  transactionId;
 
 
     @Column(name = "beneficiary_name")
     private String beneficiaryName;
 
 
-    @Column(name = "email")
+    @Column(name = "customer_id")
     private String customerID;
 
     @Column(name = "transaction_amount")
@@ -46,4 +48,9 @@ public class Transaction extends AbstractAuditingEntity {
 
     @Column(name = "transaction_date_time")
     private LocalDateTime transactionDateTime = LocalDateTime.now();
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private TransactionStatus status;
 }

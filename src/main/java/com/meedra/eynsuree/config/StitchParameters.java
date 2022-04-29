@@ -4,6 +4,11 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+
+/***
+ * This retrieves the Stitch configuration parameters from the
+ * application.properties file
+ */
 @Component
 @ConfigurationProperties(prefix = "stitch")
 @Data

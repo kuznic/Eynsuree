@@ -76,6 +76,7 @@ public class RegistrationController {
 
         //create new user
         jpaUserDetailsService.registerNewUser(userRegistrationDto);
-        return new ModelAndView("redirect:/login");
+        //return new ModelAndView("redirect:/login");
+        return new ModelAndView("successful-registration");
     }
 }

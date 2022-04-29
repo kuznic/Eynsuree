@@ -44,7 +44,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="main.html">Eynsure</a></h1>
+      <h1 class="logo">Eynsure</h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="main.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -66,12 +66,10 @@
       <div class="row justify-content-center">
         <div class="col-xl-7 col-lg-9 text-center">
           <h1>Welcome</h1>
-          <h2 style="font-size: 22px" th:text="${username} + '!'" />
+          <h2 style="font-size: 22px" th:text="${username}" />
         </div>
       </div>
-      <div class="text-center">
-        <a href="#about" class="btn-get-started scrollto">Get Started</a>
-      </div>
+
 
       <div class="row icon-boxes">
         <div class="col-md-7 col-lg-4 d-flex align-items-stretch mb-6 mb-lg-2" data-aos="zoom-in" data-aos-delay="200">

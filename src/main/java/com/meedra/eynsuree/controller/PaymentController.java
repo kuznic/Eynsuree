@@ -1,8 +1,7 @@
 package com.meedra.eynsuree.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meedra.eynsuree.dto.AmountDto;
-import com.meedra.eynsuree.dto.PaymentDto;
+import com.meedra.eynsuree.dto.PaymentFormDto;
 import com.meedra.eynsuree.dto.StitchPaymentRequestDto;
 import com.meedra.eynsuree.enums.BankId;
 import com.meedra.eynsuree.enums.Currency;
@@ -26,21 +25,29 @@ import static com.meedra.eynsuree.stitch.utility.EynsureUtils.*;
 public class PaymentController {
 
 
+    private final InsuredItemService insuredItemService;
+
+    private final JpaUserDetailsService jpaUserDetailsService;
+
+    private final ClientTokenService clientTokenService;
+
+    private final StitchClientService stitchClientService;
+
+    private final TransactionHandlerService transactionHandlerService;
+
+
     @Autowired
-    private InsuredItemService insuredItemService;
+    public PaymentController(InsuredItemService insuredItemService, JpaUserDetailsService jpaUserDetailsService,
+                             ClientTokenService clientTokenService, StitchClientService stitchClientService,
+                             TransactionHandlerService transactionHandlerService) {
+        this.insuredItemService = insuredItemService;
+        this.jpaUserDetailsService = jpaUserDetailsService;
+        this.clientTokenService = clientTokenService;
+        this.stitchClientService = stitchClientService;
+        this.transactionHandlerService = transactionHandlerService;
+    }
 
-    @Autowired
-    private JpaUserDetailsService jpaUserDetailsService;
-
-    @Autowired
-    private ClientTokenService clientTokenService;
-
-
-    @Autowired
-    private StitchClientService stitchClientService;
-
-
-
+    //renders the payment form
     @RequestMapping(value = "/payment/{id}")
     public String getPaymentForm(@PathVariable("id") UUID id, Model model) throws NoSuchFieldException {
 
@@ -51,6 +58,7 @@ public class PaymentController {
         model.addAttribute("organizationName", insuredItem.getOrganization().getName());
         model.addAttribute("beneficiaryAccount",insuredItem.getOrganization().getBankAccountNumber());
         model.addAttribute("companyName",insuredItem.getOrganization().getName());
+        model.addAttribute("customerId", insuredItem.getCustomer().getEmail());
 
         return "paymentform";
     }
@@ -58,10 +66,8 @@ public class PaymentController {
 
     @RequestMapping(value = "/submitpayment")
     @PostMapping
-    public String submitPayment(HttpServletRequest request, @ModelAttribute PaymentDto form, Model model) {
+    public String submitPayment(HttpServletRequest request, @ModelAttribute PaymentFormDto form, Model model) {
 
-
-        model.getAttribute("clientToken");
 
         var amount =  AmountDto.builder()
                 .quantity(form.getPremium().toString())
@@ -83,27 +89,34 @@ public class PaymentController {
                 .build();
 
 
-        var httpResponse = clientTokenService.callGraphQLService(stitchPaymentRequest);
+        var payment = clientTokenService.callStitchGraphQLService(stitchPaymentRequest);
 
-        if (httpResponse.length() == 0){
+        if (payment.length() == 0){
 
-            return "errorpage";
+            return "error";
         }
 
-        var paymentResponseDto =  parsePaymentResponse(httpResponse);
+        var stitchPaymentUrl =  parsePaymentResponse(payment);
 
-        var redirectUrl = getDebitUrl(paymentResponseDto.getUrl(), stitchClientService.getCredentials().getRedirectUrls().get(3));
-
-        log.info("got here");
-
+        var redirectUrl = getDebitUrl(stitchPaymentUrl.getUrl(),
+                stitchClientService.getCredentials().getRedirectUrls().get(3));
 
 
+        //save payment
 
-
+        transactionHandlerService.createTransaction(form.getOrganizationName(),
+                form.getCustomerId(),
+                form.getPremium(),
+                form.getPayerReference(),
+                stitchPaymentRequest.getExternalReference(),
+                stitchPaymentUrl.getId());
 
 
         return "redirect:" + redirectUrl;
     }
+
+
+
 
 
 

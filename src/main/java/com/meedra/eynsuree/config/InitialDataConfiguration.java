@@ -10,8 +10,8 @@ import javax.annotation.PostConstruct;
 import java.util.HashMap;
 
 
-/*
-Runs immediately after the Application Starts
+/**
+ * This runs immediately after the application starts
  */
 
 @Slf4j
@@ -31,7 +31,7 @@ public class InitialDataConfiguration {
         log.info("Started after Spring boot application !");
 
 
-        //Load credential information into the database
+        //Load credential information from the client.json file into the in-memory database
         stitchClientService.saveClientDetails();
 
 
